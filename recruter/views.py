@@ -10,12 +10,12 @@ from .forms import MyUserCreationForm
 from django.core.paginator import Paginator
 
 
-def test(request):
- return render(request, 'recruter/test.html')
+
 
 def offer(request):
- job_list = Job.objects.all().order_by('-id_job')
- p = Paginator(Job.objects.all().order_by('-id_job'), 5)
+ user = request.user  # Get the logged-in user
+ job_list = Job.objects.filter(recruter=user).order_by('-id_job')
+ p = Paginator(Job.objects.filter(recruter=user).order_by('-id_job'), 5)
  page = request.GET.get('page')
  jobs = p.get_page(page)
  nums = "a" * jobs.paginator.num_pages
@@ -34,8 +34,9 @@ def offer(request):
  
 
 def jobcans(request):
- job_list = Job.objects.all().order_by('-id_job')
- p = Paginator(Job.objects.all().order_by('-id_job'), 4)
+ user = request.user  # Get the logged-in user
+ job_list = Job.objects.filter(recruter=user).order_by('-id_job')
+ p = Paginator(Job.objects.filter(recruter=user).order_by('-id_job'), 4)
  page = request.GET.get('page')
  jobs = p.get_page(page)
  nums = "a" * jobs.paginator.num_pages

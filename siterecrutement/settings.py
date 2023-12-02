@@ -39,6 +39,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
      'shared.apps.SharedConfig',
     'recruter.apps.RecruterConfig',
+    'candidat.apps.CandidatConfig',
         'rest_framework',
 
 ]

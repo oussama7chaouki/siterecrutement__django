@@ -24,3 +24,10 @@ class Candidature(models.Model):
     reqfor = models.CharField(max_length=50)
     reqskill = models.IntegerField()
     status = models.CharField(max_length=100, default='Waiting')
+class Company(models.Model):
+    name = models.CharField(max_length=255)
+    person_name = models.CharField(max_length=255)
+    person_email = models.EmailField(max_length=255)
+    tel = models.CharField(max_length=20)
+    address = models.CharField(max_length=255)
+    rec_id = models.ForeignKey(User, on_delete=models.CASCADE)
