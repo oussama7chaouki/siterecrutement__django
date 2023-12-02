@@ -13,3 +13,9 @@ class MyUserCreationForm(UserCreationForm):
         # Adding the 'form-control' class to specific fields
         for field_name in self.fields:
             self.fields[field_name].widget.attrs['class'] = 'form-control'
+    def save(self, commit=True):
+        user = super().save(commit=False)
+        user.role = 1  # Set the default role here (change it as needed)
+        if commit:
+            user.save()
+        return user
