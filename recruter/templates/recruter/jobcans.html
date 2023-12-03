@@ -3,6 +3,8 @@
 {% include 'recruter/navbar.html' %}
 {% endblock %}
 {% block content %}
+{% load custom_filters %}
+
 <div class="page-wrapper">
 
     <div class="content container-fluid">
@@ -19,7 +21,9 @@
                 </h5>
                 <p class="card-text" style="font-size: 0.8em;"> <i class="fa fa-user" aria-hidden="true"></i>
 
-                    {{6}} APPLICANT
+                    {{ counts|get_item:jobcan.id_job|default:0 }} Applicants
+
+</p>
                 </p>
                 <a href="{% url 'jobcan' jobcan.id_job %}" class="btn btn-primary">See candidate</a>
             </div>

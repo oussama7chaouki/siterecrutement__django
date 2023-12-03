@@ -13,7 +13,7 @@ function getCookie(name) {
   }
   return cookieValue;
 }
-const csrftoken = getCookie('csrftoken');
+let csrftoken = getCookie('csrftoken');
 $('.view-user').click(function() {
       // Get user ID from data attribute
       var userId = $(this).data('user-id');

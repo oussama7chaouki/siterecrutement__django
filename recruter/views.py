@@ -3,7 +3,7 @@ from shared.models import User
 from .models import Job,Candidature,Company
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
-from django.db.models import Q
+from django.db.models import Q,Count,Subquery, OuterRef
 from django.contrib.auth import authenticate, login, logout
 from .forms import MyUserCreationForm
 # Import Pagination Stuff
@@ -40,10 +40,15 @@ def jobcans(request):
  page = request.GET.get('page')
  jobs = p.get_page(page)
  nums = "a" * jobs.paginator.num_pages
+ count_total = {}
+ for job in job_list:
+    count_total[job.id_job] = Candidature.objects.filter(job=job).count()
+
  return render(request, 'recruter/jobcans.html', 
 		{'job_list': job_list,
 		'jobcans': jobs,
-		'nums':nums
+		'nums':nums,
+        'counts': count_total
         }
 		)
 
