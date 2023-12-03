@@ -5,6 +5,8 @@ from .serializers import JobSerializer,JobSerializers
 from recruter.api import serializers
 from rest_framework import status
 from django.http import JsonResponse
+from candidat.models import Skill,Language,Formation,Experience,Information
+from .serializers import SkillSerializer, LanguageSerializer, FormationSerializer, ExperienceSerializer, InformationSerializer
 
 
 
@@ -114,3 +116,28 @@ def reject_candidature(request):
             'message': 'Invalid request method'
         }
         return JsonResponse(res)
+    
+def fetch_user(request):
+    if request.method == 'POST':
+        user_id= request.POST.get('user_id')
+        user_skills = Skill.objects.filter(user_id=user_id)
+        user_languages = Language.objects.filter(user_id=user_id)
+        user_formations = Formation.objects.filter(user_id=user_id)
+        user_experiences = Experience.objects.filter(user_id=user_id)
+        user_information = Information.objects.filter(user_id=user_id)
+
+        skill_serializer = SkillSerializer(user_skills, many=True)
+        language_serializer = LanguageSerializer(user_languages, many=True)
+        formation_serializer = FormationSerializer(user_formations, many=True)
+        experience_serializer = ExperienceSerializer(user_experiences, many=True)
+        information_serializer = InformationSerializer(user_information, many=True)
+
+        response = {
+            'array0': information_serializer.data,
+            'array1': formation_serializer.data,
+            'array2': experience_serializer.data,
+            'array3': skill_serializer.data,
+            'array4': language_serializer.data,
+        }
+
+        return JsonResponse(response)

@@ -1,6 +1,23 @@
-    $('.view-user').click(function() {
+function getCookie(name) {
+  let cookieValue = null;
+  if (document.cookie && document.cookie !== '') {
+      const cookies = document.cookie.split(';');
+      for (let i = 0; i < cookies.length; i++) {
+          const cookie = cookies[i].trim();
+          // Does this cookie string begin with the name we want?
+          if (cookie.substring(0, name.length + 1) === (name + '=')) {
+              cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+              break;
+          }
+      }
+  }
+  return cookieValue;
+}
+const csrftoken = getCookie('csrftoken');
+$('.view-user').click(function() {
       // Get user ID from data attribute
       var userId = $(this).data('user-id');
+      console.log(userId)
       var tableBody = document.querySelector('#myTable tbody');
       var table1Body = document.querySelector('#myTable1 tbody');
 // Get the element with both classes
@@ -11,13 +28,14 @@ element.text('Your string here');
 
       // Send AJAX request to fetch user details
       $.ajax({
-        url: 'fetch_user_details.php',
+        url: '/recruter/api/fetch',
+        headers: {'X-CSRFToken': csrftoken},
         type: 'POST',
         data: { user_id: userId },
         dataType: 'json',
         success: function(response) {
-          var myArray0=response.array0
-          console.log(myArray0);
+          var myArray0=response.array0[0]
+          console.log(response);
             var myArray = response.array1;
             var myArray1 = response.array2;
             var myArray2 = response.array3;
@@ -31,9 +49,10 @@ $('#tel').text(myArray0.tel)
 $('#genre').text(myArray0.genre)
 $('#Date').text(myArray0.date)
 
-
+var html='';
             if(myArray.length>0){
             for (var i = 0; i < myArray.length; i++) {
+              console.log('hello')
               html += '<tr>';
               html += '<td>' + (myArray[i].formation) + '</td>';
               html += '<td>' + (myArray[i].school) + '</td>';
@@ -41,6 +60,9 @@ $('#Date').text(myArray0.date)
               html += '<td>' + (myArray[i].endyear) + '</td>';
               html += '</tr>';
             }}
+            else{
+              html += '<tr><td></td><td></td><td></td><td></td></tr>';
+            }
             tableBody.innerHTML = html;
 
 ////////////////////////////////////////

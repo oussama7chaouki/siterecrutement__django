@@ -48,13 +48,11 @@ def jobcans(request):
 		)
 
 def jobcan(request,pk):
-   datas = [
-      {'name': 'Alice', 'score': 25, 'email': 'alice@example.com'},
-      {'name': 'Bob', 'score': 30, 'email': 'bob@example.com'},
-      {'name': 'Charlie', 'score': 22, 'email': 'charlie@example.com'},
-   ]
-   context = {'datas': datas}
-   return render(request, 'recruter/jobcan.html',context)
+    job=Job.objects.get(id_job=pk)
+    candidatures = Candidature.objects.filter(job=job)
+    print(candidatures)
+    context = {'datas': candidatures}
+    return render(request, 'recruter/jobcan.html',context)
 
 def loginPage(request):
     page = 'login'
@@ -176,4 +174,4 @@ def update_details(request):
         'company': company,
     }
 
-    return render(request, 'recruter/modify.html', context)
+    return render(request, 'recruter/modify.html', context)        

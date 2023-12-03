@@ -32,4 +32,4 @@ class Information(models.Model):
     tel = models.IntegerField(null=True, blank=True)
     genre = models.CharField(max_length=191, null=True, blank=True)
     _select = models.CharField(max_length=100, null=True, blank=True)  # Using _select due to reserved word 'select'
-    cv = models.FileField(upload_to='cv/')
+    cv = models.FileField(upload_to='cv/', null=True)
