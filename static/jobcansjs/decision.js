@@ -1,3 +1,19 @@
+function getCookie(name) {
+  let cookieValue = null;
+  if (document.cookie && document.cookie !== '') {
+      const cookies = document.cookie.split(';');
+      for (let i = 0; i < cookies.length; i++) {
+          const cookie = cookies[i].trim();
+          // Does this cookie string begin with the name we want?
+          if (cookie.substring(0, name.length + 1) === (name + '=')) {
+              cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+              break;
+          }
+      }
+  }
+  return cookieValue;
+}
+const csrftoken = getCookie('csrftoken');
 $('.accept').click(function() {
   var row = $(this).closest('tr');
   var decisionCell = row.find('.decision');
@@ -9,7 +25,8 @@ $('.accept').click(function() {
 
     // Call AJAX endpoint to accept candidate
     $.ajax({
-      url: 'api/accept_candidature',
+      url: '/recruter/api/accept_candidature',
+      headers: {'X-CSRFToken': csrftoken},
       type: 'POST',
       data: { id_candidature: id_candidature,user_id:user_id},
     dataType: 'json',
@@ -38,8 +55,9 @@ $('.accept').click(function() {
     var user_id = $(this).data('user_id');
         // Call AJAX endpoint to reject candidate
     $.ajax({
-      url: 'api/reject_candidature',
+      url: '/recruter/api/reject_candidature',
       type: 'POST',
+      headers: {'X-CSRFToken': csrftoken},
       data: { id_candidature: id_candidature,user_id:user_id},
        dataType: 'json',
       success: function(response) {
@@ -60,24 +78,3 @@ $('.accept').click(function() {
     });
   });
 
-  $('.downloadcv').click(function() {
-    var row = $(this).closest('tr');
-    var user_id = $(this).data('user_id');
-    // Call AJAX endpoint to reject candidate
-    $.ajax({
-      url: 'fetch_user_details.php',
-      type: 'POST',
-      data: { user_id: user_id },
-      dataType: 'json',
-      success: function(response) {
-        console.log("heeelo")
-        window.location.replace(
-          "useeindex.php"
-        );
-      },
-      error: function(xhr, status, error) {
-        // Display error message
-        console.log('Error: ' + error);
-      }
-    });
-  });
