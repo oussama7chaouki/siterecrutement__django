@@ -1,6 +1,6 @@
 from django.shortcuts import render, redirect
 from shared.models import User
-from .models import Job,Candidature
+from .models import Job,Candidature,Company
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from django.db.models import Q
@@ -110,4 +110,70 @@ def registerPage(request):
 
     return render(request, 'recruter/login.html', {'form': form})
 
-       
+def company_details(request):
+    user_id = request.user  # Assuming you have the rec_id in the session
+
+    try:
+        company = Company.objects.get(rec_id=user_id)
+    except Company.DoesNotExist:
+        return redirect('updatecom')
+
+    context = {
+        'company': company,
+    }
+
+    return render(request, 'recruter/settings.html', context)
+
+def update_details(request):
+    user_id = request.user
+
+    if request.method == 'POST':
+        name = request.POST.get('name')
+        person_name = request.POST.get('Contact_Person_name')
+        person_email = request.POST.get('Contact_Person_email')
+        phone_number = request.POST.get('tel')
+        address = request.POST.get('address')
+        pays = request.POST.get('pays')
+
+        # Check if the company exists
+        try:
+            company = Company.objects.get(rec_id=user_id)
+            # Modify existing company
+            company.person_name = person_name
+            company.person_email = person_email
+            company.tel = phone_number
+            company.address = address
+            company.pays=pays
+            company.save()
+        except Company.DoesNotExist:
+            # Create a new company
+            company = Company.objects.create(
+                name=name,
+                person_name=person_name,
+                person_email=person_email,
+                tel=phone_number,
+                address=address,
+                rec_id=user_id,
+                pays=pays
+
+            )
+        
+        # Redirect or render a success page
+        return redirect('settingscom') 
+
+    try:
+        company = Company.objects.get(rec_id=user_id)
+    except Company.DoesNotExist:
+        company={
+  "name": "",
+  "Contact_Person_name": "",
+  "Contact_Person_email": "",
+  "tel": "",
+  "address": "",
+  "pays":""}
+
+    context = {
+        'company': company,
+    }
+
+    return render(request, 'recruter/modify.html', context)

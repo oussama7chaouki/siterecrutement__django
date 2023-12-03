@@ -27,6 +27,8 @@ class Candidature(models.Model):
 class Company(models.Model):
     name = models.CharField(max_length=255)
     person_name = models.CharField(max_length=255)
+    pays = models.CharField(max_length=255,null=True)
+
     person_email = models.EmailField(max_length=255)
     tel = models.CharField(max_length=20)
     address = models.CharField(max_length=255)
