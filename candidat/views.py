@@ -66,7 +66,7 @@ def registerPage(request):
     return render(request, 'candidat/login.html', {'form': form})
 
 def test(request):
- return render(request, 'recruter/test.html')
+ return render(request, 'candidat/test.html')
 
 def compte(request):
  user_id = request.user

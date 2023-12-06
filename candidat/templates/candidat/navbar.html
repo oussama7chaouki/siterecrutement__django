@@ -95,13 +95,13 @@
          <div class="user-text">
             <h6>{{request.user.name}}</h6>
             <p class="text-muted mb-0">
-        Recruiter
+        Candidate
             </p>
          </div>
       </div>
       <a class="dropdown-item" href="{% url 'updatecom' %}">My Profile</a>
       <a class="dropdown-item" href="inbox.html">Inbox</a>
-      <a class="dropdown-item" href="{% url 'logout' %}">Logout</a>
+      <a class="dropdown-item" href="{% url 'logoutc' %}">Logout</a>
    </div>
 </li>
 <!-- /User Menu -->
@@ -127,7 +127,7 @@
             </p>
          </div>
       </div>
-      <a class="dropdown-item" href="{% url 'login' %}">Login</a>
+      <a class="dropdown-item" href="{% url 'loginc' %}">Login</a>
    </div>
 </li>
 {% endif %}
@@ -148,7 +148,7 @@
                 {% if request.user.is_authenticated %}
 
                 <li> 
-         <a href="{% url 'jobcans' %}"><i class="fas fa-users"></i> <span>Candidate</span></a>
+         <a href="{% url 'comptecan' %}"><i class="fas fa-users"></i> <span>compte</span></a>
                 </li>
                 <li> 
          <a href="{% url 'offer' %}"><i class="fa fa-tasks"></i> <span>Jobs</span></a>
