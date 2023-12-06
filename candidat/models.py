@@ -13,14 +13,14 @@ class Formation(models.Model):
     user_id = models.ForeignKey(User, on_delete=models.CASCADE)
     formation = models.CharField(max_length=255)
     school = models.CharField(max_length=255, null=True, blank=True)
-    startyear = models.IntegerField(null=True, blank=True)
-    endyear = models.IntegerField(null=True, blank=True)
+    startyear = models.DateField(null=True, blank=True)
+    endyear = models.DateField(null=True, blank=True)
 
 class Experience(models.Model):
     user_id = models.ForeignKey(User, on_delete=models.CASCADE)
     experience = models.CharField(max_length=255)
     company = models.CharField(max_length=255)
-    startyear = models.DateField()
+    startyear = models.DateField(null=True, blank=True)
     endyear = models.DateField(null=True, blank=True) 
 
 class Information(models.Model):

@@ -5,6 +5,8 @@ from django.contrib.auth.decorators import login_required
 from django.db.models import Q
 from django.contrib.auth import authenticate, login, logout
 from .forms import MyUserCreationForm
+from .models import Skill,Language,Formation,Experience,Information
+
 # Import Pagination Stuff
 from django.core.paginator import Paginator
 def loginPage(request):
@@ -25,7 +27,7 @@ def loginPage(request):
             return render(request, 'candidat/login.html', context)
 
                  # Check if the user's role is not equal to 1
-        if user.role != 1:
+        if user.role != 0:
             messages.error(request, 'You do not have permission to login')
             return render(request, 'candidat/login.html', context)
         
@@ -65,3 +67,17 @@ def registerPage(request):
 
 def test(request):
  return render(request, 'recruter/test.html')
+
+def compte(request):
+ user_id = request.user
+ experience=Experience.objects.filter(user_id=user_id).values()
+ formation=Formation.objects.filter(user_id=user_id).values()
+ skill=Skill.objects.filter(user_id=user_id).values()
+ language=Language.objects.filter(user_id=user_id).values()
+ context = {
+        'experience': experience,
+        'formation':formation,
+        'skill':skill,
+        'language':language,
+    }
+ return render(request, 'candidat/compte.html',)
