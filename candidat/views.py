@@ -70,14 +70,16 @@ def test(request):
 
 def compte(request):
  user_id = request.user
- experience=Experience.objects.filter(user_id=user_id).values()
- formation=Formation.objects.filter(user_id=user_id).values()
- skill=Skill.objects.filter(user_id=user_id).values()
- language=Language.objects.filter(user_id=user_id).values()
+ experience=Experience.objects.filter(user_id=user_id)
+ formation=Formation.objects.filter(user_id=user_id)
+#  print(formation)
+ print(experience)
+ skill=Skill.objects.filter(user_id=user_id)
+ language=Language.objects.filter(user_id=user_id)
  context = {
         'experience': experience,
         'formation':formation,
         'skill':skill,
         'language':language,
     }
- return render(request, 'candidat/compte.html',)
+ return render(request, 'candidat/compte.html',context)

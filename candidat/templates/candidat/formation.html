@@ -64,11 +64,11 @@
                 </div>
                 <div class="mb-3">
                     <label for="">Start Year</label>
-                    <input type="number" name="startyear" id="startyear" class="form-control" />
+                    <input type="date" name="startyear" id="startyear" class="form-control" />
                 </div>
                 <div class="mb-3">
                     <label for="">End Year</label>
-                    <input type="number" name="endyear" id="endyear" class="form-control" />
+                    <input type="date" name="endyear" id="endyear" class="form-control" />
                 </div>
             </div>
             <div class="modal-footer">
@@ -135,16 +135,16 @@
                             </tr>
                         </thead>
                         <tbody>
-                            {% for frm in formation%}
+                            {% for formations in formation %}
                                     <tr>
-                                        <td>{{frm.formation}}</td>
-                                        <td>{{frm.school}}</td>
-                                        <td>{{frm.startyear}}</td>
-                                        <td>{{frm.endyear}}</td>
+                                        <td>{{formations.formation}}</td>
+                                        <td>{{formations.school}}</td>
+                                        <td>{{formations.startyear}}</td>
+                                        <td>{{formations.endyear}}</td>
                                         <td>
-                                            <button type="button" value="{{frm.id_formation}}" class="viewformationBtn btn btn-info btn-sm mb-1">View</button>
-                                            <button type="button" value="{{frm.id_formation}}" class="editformationBtn btn btn-success btn-sm mb-1">Edit</button>
-                                            <button type="button" value="{{frm.id_formation}}" class="deleteformationBtn btn btn-danger btn-sm">Delete</button>
+                                            <button type="button" value="{{formations.id}}" class="viewformationBtn btn btn-info btn-sm mb-1">View</button>
+                                            <button type="button" value="{{formations.id}}" class="editformationBtn btn btn-success btn-sm mb-1">Edit</button>
+                                            <button type="button" value="{{formations.id}}" class="deleteformationBtn btn btn-danger btn-sm mb-1">Delete</button>
                                         </td>
                                     </tr>
                                     {% endfor %}

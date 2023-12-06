@@ -55,7 +55,7 @@ console.log(skilos)
         // alertify.confirm('Confirm Title', 'data', function(){ alertify.success('Ok') }
         //         , function(){ alertify.error('Cancel')});
          alertify.set('notifier','position', 'top-right');
-         alertify.success(data);
+         alertify.success(data.message);
          $('#submit').attr("disabled", false);
          $('#submit').val('Submit');
         }
