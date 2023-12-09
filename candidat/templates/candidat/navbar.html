@@ -99,7 +99,7 @@
             </p>
          </div>
       </div>
-      <a class="dropdown-item" href="{% url 'updatecom' %}">My Profile</a>
+      <a class="dropdown-item" href="{% url 'profile_form' %}">My Profile</a>
       <a class="dropdown-item" href="inbox.html">Inbox</a>
       <a class="dropdown-item" href="{% url 'logoutc' %}">Logout</a>
    </div>
@@ -151,11 +151,11 @@
          <a href="{% url 'comptecan' %}"><i class="fas fa-users"></i> <span>compte</span></a>
                 </li>
                 <li> 
-         <a href="{% url 'offer' %}"><i class="fa fa-tasks"></i> <span>Jobs</span></a>
+         <a href="{% url 'candidat' %}"><i class="fa fa-tasks"></i> <span>candida</span></a>
                 </li>
                 
                 <li> 
-                    <a href="{% url 'settingscom' %}"><i class="fas fa-cog"></i> <span>Settings</span></a>
+                    <a href="{% url 'settingscan' %}"><i class="fas fa-cog"></i> <span>Settings</span></a>
                 </li>
                 {% endif %}
 

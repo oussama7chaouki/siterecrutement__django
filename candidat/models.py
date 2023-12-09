@@ -33,3 +33,16 @@ class Information(models.Model):
     genre = models.CharField(max_length=191, null=True, blank=True)
     _select = models.CharField(max_length=100, null=True, blank=True)  # Using _select due to reserved word 'select'
     cv = models.FileField(upload_to='cv/', null=True)
+
+
+class Profile(models.Model):
+    last_name = models.CharField(max_length=255)
+    name = models.CharField(max_length=255)
+    email=models.EmailField(unique=True, null=True)
+    date_naissance = models.DateField()
+    genre = models.CharField(max_length=255)
+    ville = models.CharField(max_length=255)
+    pays=models.CharField(max_length=255, null=True)
+    tel = models.CharField(max_length=20)
+    domaine = models.CharField(max_length=20)
+    candidat_id = models.ForeignKey(User, on_delete=models.CASCADE)
