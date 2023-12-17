@@ -41,6 +41,7 @@ INSTALLED_APPS = [
     'recruter.apps.RecruterConfig',
     'candidat.apps.CandidatConfig',
         'rest_framework',
+        'appadmin.apps.AppadminConfig'
 
 ]
 
