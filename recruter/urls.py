@@ -11,5 +11,6 @@ urlpatterns = [
     path('register/', views.registerPage, name="register"),
     path('settings/', views.company_details, name="settingscom"),
     path('modify/', views.update_details, name="updatecom"),
+        path('', views.offer,name="default"),
 
 ]

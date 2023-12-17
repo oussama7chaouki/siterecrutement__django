@@ -8,10 +8,25 @@ from django.contrib.auth import authenticate, login, logout
 from .forms import MyUserCreationForm
 # Import Pagination Stuff
 from django.core.paginator import Paginator
+from django.http import HttpResponse
 
+# Define the custom decorator
+def user_role_required(role):
+    def decorator(view_func):
+        def wrapper(request, *args, **kwargs):
+            if request.user.role != role:
+                if request.user.role == 2:
+                    return redirect('/admin/')
+                else:
+                    return redirect('/candidat/')
+            return view_func(request, *args, **kwargs)
 
+        return wrapper
 
+    return decorator
 
+@login_required(login_url='/recruter/login')
+@user_role_required(role=1)
 def offer(request):
  user = request.user  # Get the logged-in user
  job_list = Job.objects.filter(recruter=user).order_by('-id_job')
@@ -32,7 +47,8 @@ def offer(request):
 #     {"id": 3, "title": "Marketing Manscorer", "domain": "Marketing", "date": "2023-11-20"},
 #     ]
  
-
+@login_required(login_url='/recruter/login')
+@user_role_required(role=1)
 def jobcans(request):
  user = request.user  # Get the logged-in user
  job_list = Job.objects.filter(recruter=user).order_by('-id_job')
@@ -51,7 +67,8 @@ def jobcans(request):
         'counts': count_total
         }
 		)
-
+@login_required(login_url='/recruter/login')
+@user_role_required(role=1)
 def jobcan(request,pk):
     job=Job.objects.get(id_job=pk)
     candidatures = Candidature.objects.filter(job=job)
@@ -91,7 +108,8 @@ def loginPage(request):
 
     return render(request, 'recruter/login.html', context)
 
-
+@login_required(login_url='/recruter/login')
+@user_role_required(role=1)
 def logoutUser(request):
     logout(request)
     return redirect('login')
@@ -112,7 +130,8 @@ def registerPage(request):
             messages.error(request, 'An error occurred during registration')
 
     return render(request, 'recruter/login.html', {'form': form})
-
+@login_required(login_url='/recruter/login')
+@user_role_required(role=1)
 def company_details(request):
     user_id = request.user  # Assuming you have the rec_id in the session
 
@@ -126,7 +145,8 @@ def company_details(request):
     }
 
     return render(request, 'recruter/settings.html', context)
-
+@login_required(login_url='/recruter/login')
+@user_role_required(role=1)
 def update_details(request):
     user_id = request.user
 
